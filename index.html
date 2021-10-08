@@ -6,142 +6,16 @@
     <title>Scrolling Transition Part2</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="shortcut icon" href="img/favicon.ico">
-    <link rel="icon" href="img/favicon.ico">
-    
-    <style>
-        *{margin:0; padding:0;}
-        li{list-style: none;}
-        #wrap{height:600vh;}
-        body::-webkit-scrollbar {
-            width: 0.7em;
-            background: #f33;
-        }
-        body::-webkit-scrollbar-thumb {
-            background: #f99;
-        }
-        section{height:100vh; position:relative;}
-        section:nth-child(1){background:url('img/0.jpg'); background-size: cover; background-position: center center;}
-        section:nth-child(2){background:url('img/1.jpg'); background-size: cover; background-position: center center;}
-        section:nth-child(3){background:url('img/2.jpg'); background-size: cover; background-position: center center;}
-        section:nth-child(4){background:url('img/3.jpg'); background-size: cover; background-position: center center;}
-        section:nth-child(5){background:url('img/4.jpg'); background-size: cover; background-position: center center;}
-        section:nth-child(6){background:url('img/5.jpg'); background-size: cover; background-position: center center;}
+    <link rel="shortcut icon" href="img/favicon.ico"><!-- 수정 -->
+    <link rel="icon" href="img/favicon.ico"><!-- 수정 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
 
-        section .box{position:absolute; top:300px; left:-300px; opacity:0; border:2px #333 solid;  width:150px; height: 150px; transition:all .6s;}
-        section .txt{position:absolute; top:-300px; left:700px; opacity:0; border:2px #333 solid; width:300px; height:150px; background: #fff; transition:all .6s;}
-
-        section.active .box{position:absolute; top:300px; left:300px; opacity:1; border:2px #333 solid;  width:150px; height: 150px; }
-        section.active .txt{position:absolute; top:300px; left:700px; opacity:1; border:2px #333 solid; width:300px; height:150px; background: #fff; }
-
-        .targetMenu{width:50px; height:300px; position:fixed; top:calc(50% - 150px); left:calc(100% - 150px); z-index: 9999999;}
-        .targetMenu a{display:block; width:20px; height: 20px; line-height: 20px; text-align: center; background:#ccc; font-size: 1.2rem; border-radius: 50%;
-            cursor: pointer; transition:all .6s; margin: 0 auto;
-        }
-        .targetMenu li{width:50px; height: 50px; text-align: center;}
-        .targetMenu a.on{width:22px; height:22px; background: dodgerblue;  font-size: 1.5rem;}
-
-        section .title{
-            position: absolute;
-            top:30%;
-            left:20%;
-            font-size: 4rem;
-            color:#fff;
-            transform: translate(-50%,-50%);
-        }
-        section .title span{
-            display:inline-block;
-        }
-        section .title span{
-            transform:translate(50px,0);
-            transition:.6s;
-            opacity:0;
-        }
-        section.active .title span{
-            transform:translate(0,0);
-            opacity:1;
-        }
-        section .title span:nth-child(1){transition-delay: .1s;}
-        section .title span:nth-child(2){transition-delay: .2s;}
-        section .title span:nth-child(3){transition-delay: .3s;}
-        section .title span:nth-child(4){transition-delay: .4s;}
-        section .title span:nth-child(5){transition-delay: .5s;}
-
-        /* 두번째 섹션 */
-        .chart{
-            width:300px;
-            height:180px;
-            position: absolute;
-            top:40%;
-            left:60%;
-            background:#adf;
-        }
-        .chart .graph li{
-            border:1px #333 solid;
-            height: 40px;
-            margin: 5px;
-        }
-
-        .chart .graph li div{
-            height: 40px;
-            background:#ff5;
-            transform-origin: left top;
-            transition:.6s;
-        }
-
-        section .chart .graph li:nth-child(1) div{
-            transform:scaleX(0);
-        }
-        section .chart .graph li:nth-child(2) div{
-            transform:scaleX(0);
-        }
-        section .chart .graph li:nth-child(3) div{
-            transform:scaleX(0);
-        }
-
-        section.active .chart .graph li:nth-child(1) div{
-            transform:scaleX(.9);
-            transition-delay: .6s;
-        }
-        section.active .chart .graph li:nth-child(2) div{
-            transform:scaleX(.85);
-            transition-delay: 1.2s;
-        }
-        section.active .chart .graph li:nth-child(3) div{
-            transform:scaleX(.77);
-            transition-delay: 1.8s;
-        }
-       
-        /* 3번 섹션 */
-        .container{
-            position:absolute;
-            top:50%;
-            left:-20%;
-            background:#eee;
-        }
-        .ibox{width:600px; height:150px;
-            background:#fee;
-            transform-origin: left center;
-            position: absolute;
-            transition:.3s;
-        }
-        .ibox:nth-child(1){
-            /* transform: rotate(90deg) translateX(400px); */
-            background: url("https://cdn.pixabay.com/photo/2016/07/11/15/43/woman-1509956_960_720.jpg");
-        }
-        .ibox:nth-child(2){
-            /* transform: rotate(60deg) translateX(400px); */
-            background: url("https://cdn.pixabay.com/photo/2018/03/12/12/32/woman-3219507_960_720.jpg");
-        }
-        .ibox:nth-child(3){
-            /* transform: rotate(30deg) translateX(400px); */
-            background: url("https://cdn.pixabay.com/photo/2016/03/23/04/01/woman-1274056_960_720.jpg");
-        }
-        .ibox:nth-child(4){
-            /* transform: rotate(0deg) translateX(400px); */
-            background: url("https://cdn.pixabay.com/photo/2016/01/19/17/48/woman-1149911_960_720.jpg");
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="targetMenu">
@@ -155,17 +29,25 @@
         </ul>
     </div>
     <div id="wrap">
-        <section>
+        <section><!-- 1번 -->
             <div class="title">
-                <span>안</span><span>녕</span><span>하</span><span>세</span><span>요</span>
+                <span>안</span><span>녕</span><span>하</span><span>세</span><span>요</span><br><!-- 6번 -->
+                <span>매</span><span>콤</span><span>한</span> <span>디</span><span>자</span><span>이</span><span>너</span><br><!-- 14번 -->
+                <span>제</span><span>갈</span><span>강</span> <span>입</span><span>니</span><span>다</span>
             </div>
             
         </section>
-        <section>
-            <div class="box">
-                <a href="http://ck2lucky.dothome.co.kr/" target="_blank">포트폴리오 링크</a>
-                <a href="https://ck2lucky.github.io/project03/" target="_blank">포트폴리오 링크</a>
+        <section><!-- 2번 Profile -->
+            <div class="protitle">
+               <div class="subject">Just do it</div>
+               <div class="double"><pre>"                "</pre></div>
+               <div class="round"></div>
+               <div class="subtext">하는 디자이너 <span>제갈강</span>입니다.</div>
+               <p>
+                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis exercitationem maiores quos quam consequatur dolorum, corporis, nesciunt fugiat ea laboriosam totam recusandae culpa deserunt! Molestias quam quisquam reprehenderit vero ex. 
+               </p>
             </div>
+
             <div class="chart">
                 <ul class="graph">
                     <li><div></div></li>
@@ -196,94 +78,6 @@
         </section>
     </div>
 
-    <script>
-
-
-        var targetMenu = document.querySelector(".targetMenu");
-        var onTaget = document.querySelectorAll(".targetMenu ul li");
-        var section = document.querySelectorAll("section");
-        var sectionCounter = 0; 
-        var offset = 0;
-        var count=0;       
-        document.addEventListener('wheel', scrollAni);
-        window.addEventListener('load', activeMenu);
-        targetMenu.addEventListener('click', gosection);
-
-        function scrollAni(e){
-            
-            count++;
-            var gosectioncount = count%7; // 스크롤을 5번 굴리면 이동.
-            if(e.wheelDelta<0){
-                if(gosectioncount == 0 && sectionCounter<5)sectionCounter++;
-            }else{
-                if(gosectioncount == 0 && sectionCounter>0)sectionCounter--;
-            }
-            
-            offset = innerHeight*sectionCounter;
-
-            $("html, body").stop().animate({scrollTop:offset},600,"easeInOutExpo");
-
-            setTimeout(activeMenu,300);
-            onTargetMenu();
-
-            if(sectionCounter != 2 && tn == 1) tn = 0;
-        }
-
-        function activeMenu(){
-            section.forEach(function(ele){ele.classList.remove("active");});
-            section[sectionCounter].classList.add("active");
-        }
-
-        function gosection(e){ //menu 클릭시 이동.
-            sectionCounter = Number(e.target.getAttribute("datanum"));
-            offset = innerHeight*sectionCounter;
-            $("html, body").stop().animate({scrollTop:offset},600,"easeInOutExpo");
-            setTimeout(activeMenu,300);
-            onTargetMenu();
-        }
-
-        function onTargetMenu(){
-            onTaget.forEach(function(menu){
-                menu.children[0].classList.remove("on");
-            });
-            onTaget[sectionCounter].children[0].classList.add("on");
-        }
-
-        window.addEventListener('load', roImg);
-        section[2].addEventListener('wheel', roImg);
-        var ibox = document.querySelectorAll(".ibox");
-        var icount = 0;
-        var tn = 0;
-
-        function roImg(e){
-            if(e.wheelDelta>0) return;
-            if(tn) return;
-            icount--;
-            ibox[0].style.transform = `rotate(${icount}deg) translateX(400px)`;
-            ibox[1].style.transform = `rotate(${icount+30}deg) translateX(400px)`;
-            ibox[2].style.transform = `rotate(${icount+60}deg) translateX(400px)`;
-            ibox[3].style.transform = `rotate(${icount+90}deg) translateX(400px)`;
-            if(icount<-90 && tn == 0 ){
-                icount = 0;
-                ibox[0].style.transform = `rotate(${icount}deg) translateX(400px)`;
-                ibox[1].style.transform = `rotate(${icount+30}deg) translateX(400px)`;
-                ibox[2].style.transform = `rotate(${icount+60}deg) translateX(400px)`;
-                ibox[3].style.transform = `rotate(${icount+90}deg) translateX(400px)`;
-                tn = 1;
-            }else{
-                count = 0;
-            }
-        }
-
-        // 스크롤 막기 시작
-        $('html, body').css({'overflow': 'hidden', 'height': '100%'});
-        $('#element').on('scroll touchmove mousewheel', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
-        });
-        //스크롤 막기 끝
-
-    </script>
+    <script src="js/script.js"> </script>
 </body>
 </html>
